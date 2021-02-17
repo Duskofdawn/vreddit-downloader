@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2,
+    "name": "v.redd.it Downloader",
+    "version": "1.0",
+    "author": "duskofdawn",
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "page_action": {
+        "default_icon": {
+            "128": "icons/icon_128_active.png",
+            "64":  "icons/icon_64_active.png",
+            "32":  "icons/icon_32_active.png",
+            "24":  "icons/icon_24_active.png",
+            "16":  "icons/icon_16_active.png"
+            },
+        "default_popup": "popup.html",
+        "default_title": "v.redd.it Downloader"
+    },
+    "permissions": [
+        "downloads",
+        "tabs",
+        "declarativeContent",
+        "*://*.reddit.com/*",
+        "*://*.redd.it/*"
+    ],
+    "icons" : {
+            "128": "icons/icon_128_active.png",
+            "64":  "icons/icon_64_active.png",
+            "32":  "icons/icon_32_active.png",
+            "24":  "icons/icon_24_active.png",
+            "16":  "icons/icon_16_active.png"
+    }
+}
