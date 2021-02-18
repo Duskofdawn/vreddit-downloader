@@ -4,13 +4,15 @@ chrome.runtime.onInstalled.addListener(function() {
         {
           conditions: [
             new chrome.declarativeContent.PageStateMatcher({
-                pageUrl: { urlContains: 'reddit.co' },
+                pageUrl: { urlContains: 'reddit.co' }
             }),
             new chrome.declarativeContent.PageStateMatcher({
-                pageUrl: { urlContains: 'redd.it' },
+                pageUrl: { urlContains: 'redd.it' }
             })
           ],
-          actions: [ new chrome.declarativeContent.ShowPageAction() ]
+          actions: [ 
+            new chrome.declarativeContent.ShowPageAction()
+          ]
         }
       ]);
     });
