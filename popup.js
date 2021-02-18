@@ -10,8 +10,19 @@ function copyToClipboard() {
             url = url + ".json";
         }
         var JSON = $.getJSON(url, function() {
+            var response;
+            var gotURL = true;
             try {
-                var response = JSON.responseJSON[0].data.children[0].data.secure_media.reddit_video.fallback_url;
+                response = JSON.responseJSON[0].data.children[0].data.secure_media.reddit_video.fallback_url;
+            } catch(error) {
+                try {
+                    response = JSON.responseJSON[0].data.children[0].data.crosspost_parent_list[0].secure_media.reddit_video.fallback_url;
+                } catch(error) {
+                    gotURL = false;
+                }
+            }
+
+            if (gotURL == true) {
                 response = response.replace("?source=fallback", "");
                 const dummy = document.createElement("textarea");
                 dummy.style.cssText = 'opacity:0; position:fixed; width:1px; height:1px; top:0; left:0;'
@@ -22,7 +33,7 @@ function copyToClipboard() {
                 document.execCommand("copy");
                 dummy.remove();
                 document.getElementById('clipboardvid').innerHTML = "Copied."
-            } catch {
+            } else {
                 document.getElementById('clipboardvid').style.cssText = 'height: 50px;';
                 document.getElementById('clipboardvid').innerHTML = "No v.redd.it URL found.";
                 document.getElementById('downloadvid').remove();
@@ -35,6 +46,7 @@ function copyToClipboard() {
 
 function downloadVideo() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        
         var currentDate = new Date();
         var downloadName =  "vreddit-" + currentDate.getFullYear()
                         + "-" + (currentDate.getMonth())
@@ -48,12 +60,23 @@ function downloadVideo() {
             url = url + ".json";
         }
         var JSON = $.getJSON(url, function() {
+            var response;
+            var gotURL = true;
             try {
-                var response = JSON.responseJSON[0].data.children[0].data.secure_media.reddit_video.fallback_url;
+                response = JSON.responseJSON[0].data.children[0].data.secure_media.reddit_video.fallback_url;
+            } catch {
+                try {
+                    response = JSON.responseJSON[0].data.children[0].data.crosspost_parent_list[0].secure_media.reddit_video.fallback_url;
+                } catch {
+                    gotURL = false;
+                }
+            }
+
+            if (gotURL == true) {
                 response = response.replace("?source=fallback", "");
                 document.getElementById('downloadvid').innerHTML = "Downloading...";
                 chrome.downloads.download({url: response, filename: downloadName});
-            } catch {
+            } else {
                 document.getElementById('clipboardvid').style.cssText = 'height: 50px;';
                 document.getElementById('clipboardvid').innerHTML = "No v.redd.it URL found.";
                 document.getElementById('downloadvid').remove();

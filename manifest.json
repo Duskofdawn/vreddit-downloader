@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "v.redd.it Downloader",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "author": "duskofdawn",
     "background": {
         "scripts": ["background.js"],
@@ -21,8 +21,7 @@
     "permissions": [
         "downloads",
         "activeTab",
-        "declarativeContent",
-        "*://*/*"
+        "declarativeContent"
     ],
     "icons" : {
             "128": "icons/icon_128_active.png",
